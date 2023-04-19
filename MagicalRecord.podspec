@@ -1,36 +1,65 @@
 Pod::Spec.new do |s|
-  s.default_subspec = 'Core'
   s.name     = 'MagicalRecord'
-  s.version  = '2.4.0'
-  s.license  = 'MIT'
-  s.summary  = 'Super Awesome Easy Fetching for Core Data!'
-  s.homepage = 'https://github.com/magicalpanda/MagicalRecord'
-  s.author   = { 'Saul Mora' => 'saul@magicalpanda.com', 'Tony Arnold' => 'tony@thecocoabots.com' }
-  s.source   = { :git => 'https://github.com/magicalpanda/MagicalRecord.git', :tag => "v#{s.version}" }
+  s.version  = "3.0.0.dev.#{Time.now.to_i}"
+  s.license  = { :type => 'MIT', :file => 'LICENSE' }
+  s.summary  = 'Super Awesome Easy Fetching for Core Data 1!!!11!!!!1!.'
+  s.homepage = 'http://github.com/magicalpanda/MagicalRecord'
+  s.authors  = { 'Saul Mora' => 'saul@magicalpanda.com', 'Tony Arnold' => 'tony@thecocoabots.com' }
+  s.source   = { :git => 'https://github.com/magicalpanda/MagicalRecord.git', :branch => 'release/3.0' }
   s.description  = 'Handy fetching, threading and data import helpers to make Core Data a little easier to use.'
-  s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.8'
-  s.tvos.deployment_target = '9.0'
-  s.watchos.deployment_target = '2.0'
+  s.requires_arc = true
+  s.default_subspec = 'Core'
+  s.ios.deployment_target = '7.0'
+  s.osx.deployment_target = '10.9'
 
-  s.subspec 'Core' do |sp|
+  s.subspec "Core" do |sp|
     sp.framework    = 'CoreData'
     sp.header_dir   = 'MagicalRecord'
-    sp.source_files = 'MagicalRecord/**/*.{h,m}'
-    sp.exclude_files = '**/MagicalRecordShorthandMethodAliases.h'
+    sp.source_files = 'Library/**/*.{h,m}'
     sp.prefix_header_contents = <<-EOS
-    #import <CoreData/CoreData.h>
-    #import <MagicalRecord/MagicalRecord.h>
-    EOS
+#import <CoreData/CoreData.h>
+#import "MagicalRecord.h"
+EOS
   end
 
-  s.subspec 'ShorthandMethodAliases' do |sp|
-    sp.source_files = '**/MagicalRecordShorthandMethodAliases.h'
+  s.subspec "Core+Logging" do |sp|
+    sp.framework    = 'CoreData'
+    sp.header_dir   = 'MagicalRecord'
+    sp.source_files = 'Library/**/*.{h,m}'
+    sp.prefix_header_contents = <<-EOS
+#import <CoreData/CoreData.h>
+#if defined(COCOAPODS_POD_AVAILABLE_CocoaLumberjack)
+  #import "DDLog.h"
+#endif
+#define MR_LOGGING_ENABLED 1
+#import "MagicalRecord.h"
+EOS
   end
 
-  s.subspec 'CocoaLumberjack' do |sp|
-    sp.dependency 'CocoaLumberjack', '~> 3.0'
-    sp.dependency 'MagicalRecord/Core'
+  s.subspec "Shorthand" do |sp|
+    sp.framework    = 'CoreData'
+    sp.header_dir   = 'MagicalRecord'
+    sp.source_files = 'Library/**/*.{h,m}'
+    sp.prefix_header_contents = <<-EOS
+#import <CoreData/CoreData.h>
+#define MR_SHORTHAND 1
+#import "MagicalRecord.h"
+EOS
+  end
+
+  s.subspec "Shorthand+Logging" do |sp|
+    sp.framework    = 'CoreData'
+    sp.header_dir   = 'MagicalRecord'
+    sp.source_files = 'Library/**/*.{h,m}'
+    sp.prefix_header_contents = <<-EOS
+#import <CoreData/CoreData.h>
+#if defined(COCOAPODS_POD_AVAILABLE_CocoaLumberjack)
+  #import "DDLog.h"
+#endif
+#define MR_LOGGING_ENABLED 1
+#define MR_SHORTHAND 1
+#import "MagicalRecord.h"
+EOS
   end
 
 end

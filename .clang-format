@@ -32,7 +32,7 @@ SpacesInAngles:  false
 SpacesInContainerLiterals: true
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
-SpacesInSquareBrackets: false
+SpacesInSquareBrackets: true
 Standard:        Auto
 TabWidth:        4
 UseTab:          Never

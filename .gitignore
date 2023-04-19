@@ -22,5 +22,5 @@ Carthage/Build
 
 *.gcno
 *.gcda
-
-MagicalRecord.framework.zip
+Carthage
+Vendor
